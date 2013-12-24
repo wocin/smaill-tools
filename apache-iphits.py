@@ -17,9 +17,6 @@ def hits(logfile):
         ip=line.split(" ",1)[0]
         hits[ip]=hits.get(ip,0)+1
     return hits
-logfile=sys.argv[1]
-print hits(logfile)
-#-------------------I am boring line------------------------------------
 #analysis status_code
 def codecount(logfile):
     count={}
@@ -31,4 +28,15 @@ def codecount(logfile):
 
 logfile=sys.argv[1]
 print codecount(logfile)
+print hist(logfile)
 #-------------------I am boring line------------------------------------
+#def hits(logfile):
+#    count={}
+#    hits={}
+#    contents=open(logfile,'r')
+#    for line in contents:
+#        ip=line.split(" ",1)[0]
+#        code=line.split(" ")[8]
+#        hits[ip]=hits.get(ip,0)+1
+#        count[code]=count.get(code,0)+1
+#    return count,hits
