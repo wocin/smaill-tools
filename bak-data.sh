@@ -16,3 +16,10 @@ for db in $alldb;do
     $MYSQLDUMP -u $USER -p$PASSWD $db|$GZIP -9 >$BACKDIR/$TIME-$i.gz;
 done
 #-------------------I am boring line------------------------------------
+#backup redis
+rhost=''
+rport=''
+rdir=`cat /etc/redis.conf|grep "dir "|awk '{print $2}'`
+redis-cli -h $rhost -p $rport save
+tar zcvf $BACKDIR/$TIME-redis.tar.gz $rdir/*.rdb
+#-------------------I am boring line------------------------------------
