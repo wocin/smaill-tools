@@ -1,7 +1,6 @@
 #!/usr/bin/python
 #By wocin
 #Email ---
-#analysis nginx ip hits or apache ip hits
 #-------------------I am boring line------------------------------------
 '''
 log_format main '$remote_addr - $remote_user [$time_local]'
@@ -9,6 +8,7 @@ log_format main '$remote_addr - $remote_user [$time_local]'
                 '"$http_referer" "$http_user_agent"';
 '''
 #-------------------I am boring line------------------------------------
+#analysis nginx ip hits or apache ip hits
 import sys
 def hits(logfile):
     hits={}
@@ -19,3 +19,16 @@ def hits(logfile):
     return hits
 logfile=sys.argv[1]
 print hits(logfile)
+#-------------------I am boring line------------------------------------
+#analysis status_code
+def codecount(logfile):
+    count={}
+    content=open(logfile,'r')
+    for line in content:
+        code=line.split(" ")[8]
+        count[code]=count.get(code,0)+1
+    return count
+
+logfile=sys.argv[1]
+print codecount(logfile)
+#-------------------I am boring line------------------------------------
