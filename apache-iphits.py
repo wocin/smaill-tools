@@ -50,7 +50,14 @@ def main():
     parser=parse(usage)
     parser.add_option("-f",dest="log_filename",default="logfile")
     (option,args)=parser.parse_args()
-    print iphits(option.log_filename)
+    hits=iphits(option.log_filename)[0]
+    ips=iphits(option.log_filename)[1]
+    for (k,v) in hits.items():
+	print '{0:16} {1:10}'.format(k,v)
 
+    print '#'*28
+
+    for (k,v) in ips.items():
+	print '{0:16} {1:10}'.format(k,v)
 if __name__ == '__main__':
     main()
