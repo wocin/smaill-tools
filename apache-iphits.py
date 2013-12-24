@@ -50,6 +50,8 @@ def main():
     parser=parse(usage)
     parser.add_option("-f",dest="log_filename",default="logfile")
     (option,args)=parser.parse_args()
+    if len(args) != 1:
+    	parser.error("incorrect number of args")
     hits=iphits(option.log_filename)[0]
     ips=iphits(option.log_filename)[1]
     for (k,v) in hits.items():
