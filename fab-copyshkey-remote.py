@@ -9,6 +9,9 @@ from fabric.context_managers import *
 env.roledefs={'host1':['root@192.168.6.236'],'host2':['root@192.168.6.238'],'host3':['root@192.168.6.235']}
 env.passwords={'host1':"123456",'host2':"123456",'host3':"123456"}
 
+def createkeys():
+   local('ssh-keygen -t rsa')
+   print(red('created sshkey ok!'))
 @roles('host1')
 def putkeys1():
    put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
@@ -25,6 +28,7 @@ def putkeys3():
 #   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 def all():
-    execute(putkeys1)
-    execute(putkeys2)
-    execute(putkeys3)
+   execute(createkeys)
+   execute(putkeys1)
+   execute(putkeys2)
+   execute(putkeys3)
