@@ -15,17 +15,14 @@ def createkeys():
 @roles('host1')
 def putkeys1():
    put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
-#   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 @roles('host2')
 def putkeys2():
    put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
-#   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 @roles('host3')
 def putkeys3():
    put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
-#   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 def all():
    execute(createkeys)
