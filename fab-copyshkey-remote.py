@@ -11,18 +11,18 @@ env.passwords={'host1':"123456",'host2':"123456",'host3':"123456"}
 
 @roles('host1')
 def putkeys1():
-   put("/root/.ssh/id_rsa.pub","/root/.ssh/")
-   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
+   put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
+#   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 @roles('host2')
 def putkeys2():
-   put("/root/.ssh/id_rsa.pub","/root/.ssh/")
-   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
+   put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
+#   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 @roles('host3')
 def putkeys3():
-   put("/root/.ssh/id_rsa.pub","/root/.ssh/")
-   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
+   put("/root/.ssh/id_rsa.pub","/root/.ssh/authorized_keys")
+#   run('mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys')
 
 def all():
     execute(putkeys1)
