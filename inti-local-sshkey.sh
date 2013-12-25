@@ -1,6 +1,7 @@
 #!/bin/bash
 #By wocin
 #Email ---
+#-------------------I am boring line------------------------------------
 yum -y install expect
 expect -c "
     set timeout 3;
@@ -11,4 +12,4 @@ expect -c "
     sleep 1;
     expect \" again:\" {send \"\n\";};
     expect eof;"
-    
+#-------------------I am boring line------------------------------------
