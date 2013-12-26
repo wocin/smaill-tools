@@ -1,0 +1,80 @@
+#nginx log format
+#
+#$remote_addr & $http_x_forwarded_for ( records ip address ) 
+#$remote_user ( record remote client user name )
+#$time_local ( record access time )
+#$request ( records request URL and HTTP protocol )
+#$status ( record request status )
+#$body_bytes_sent ( records sent to the main content of size of the clients )
+#$http_referer ( records come from which page to access links )
+#$http_user_agent ( records th client browser infomation )
+#-----------------
+#apache log format
+
+log_format main '$remote_addr - $remote_user [$time_local]'
+		'"$request" $status $body_bytes_sent '
+		'"$http_referer" "$http_user_agent"';
+#----------------
+#proxy log format
+
+log_format proxy_log '$http_x_forwarded_for - $remote_user [$time_local] '
+			'"$request" $status $body_bytes_sent '
+			'"$http_referer" "$http_user_agent"';
+#----------------------------------------------------------------------------
+#access_log Grammar
+
+access_log path [formatname [buffer=size | off ]]
+#----------------------------------------------------------------------------
+#nginx auto list dir
+location / {
+	autoindex [on | off];
+	autoindex_exact_size [on | off];
+	autoindex_localtime [on | off];
+}
+#----------------------------------------------------------------------------
+#nginx cache
+location ~ .*\.(gif|jpg|jpeg|png|swf|bmp)$ {
+	expires 30d;
+}
+location ~ .*\.(css|js)?$ {
+	expires 1h;
+}
+#----------------------------------------------------------------------------
+#nginx reverse proxy
+http {
+	client_max_body_size 200m;
+	client_body_buffer_size 128l;
+	proxy_connect_timeout 300;
+	proxy_read_timeout 300;
+	proxy_send_timeout 300;
+	proxy_buffer_size 16k;
+	proxy_buffers 4 32k;
+	proxy_busy_buffers_size 64k;
+	proxy_temp_file_write_size 64k;
+	
+	upstream server_pool {
+		server 192.168.6.100:80 weight=2 max_fails=2 fail_timeout=20s;
+		server 192.168.6.200:80 weight=3 max_fails=2 fail_timeout=20s;
+		server 192.168.6.300:80 weight=4 max_fails=2 fail_timeout=20s;
+	}
+#session share
+#	upstream backend {
+#		ip_hash;
+#		server backend1.example.com;
+#		server backend2.example.com;
+#		server backend3.example.com down;
+#		server backend4.example.com;
+#	}
+	server {
+		listen 80;
+		server_name www.yourdomain.com;
+		location / {
+			proxy_next_upstream http_502 htp_504 error timeout invalid_header;
+			proxy_pass http://server_pool;
+			proxy_set_header Host www.yourdomain.com;
+			proxy_set_header X-Forwarded-For $remote_addr;
+		}
+		access_log logs/www.yourdomain.com.log main;
+	}
+}
+#----------------------------------------------------------------------------

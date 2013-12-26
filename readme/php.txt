@@ -1,0 +1,62 @@
+PHP的安全
+#---------------------------------------------
+1.减少不必要的模块
+2.动态加载模块
+
+3.防止PHP信息泄漏
+/etc/php.d/srcurity.ini
+expose_php=Off
+
+4.记录所有PHP错误
+/etc/php.d/srcurity.ini
+display_errors=Off
+log_errors=On
+error_log=/var/log/php/php_script.log
+
+5.禁止文件上传
+/etc/php.d/srcurity.ini
+file_upload=Off
+如果上传，限制大小
+file_upload=On
+upload_max_filesize=1M
+
+6.关闭远程代码执行
+/etc/php.d/srcurity.ini
+allow_url_fopen=Off
+allow_url_include=Off
+
+7.启用SQL安全模式
+/etc/php.d/srcurity.ini
+sql.saef_mode=On
+magic_quotes_gpc=Off
+
+8.控制POST的数据大小
+/etc/php.d/srcurity.ini
+post_max_size=1K
+
+9.资源控制
+max_execution_time = 30
+max_input_time = 30
+memory_limit = 40M
+
+10.取消危险PHP函数
+disable_functions =exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source
+
+11.限制PHP访问文件系统
+open_basedir="/var/www/html/"
+
+12.Session路径
+session.save_path="/var/lib/php/session"
+upload_tmp_dir="/var/lib/php/session"
+确保此路径不可被其他用户访问
+
+13.限制文件及目录的访问
+chown -R apache:apache /var/www/html/
+chmod -R 0444 /var/www/html/
+find /var/www/html/ -type d -print0 |xargs -0 -I{} chmod 0445 {}
+
+14.文件写入保护
+chattr +i /etc/php.ini
+chattr +i /etc/php.d/*
+chattr +i /etc/my.ini
+chattr +i /etc/httpd/conf/httpd.conf

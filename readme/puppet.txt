@@ -1,13 +1,49 @@
 #-------------------------------------------------------
 #package
-#-------------------------------------------------------
+#-------
 #install multi packages
 $beinstall = [ "sudo", "strace", "php-devel"]
 package { $beinstall: ensure => "installed" }
 #newer package versions
 package { $beinstall: ensure => "latest" }
+#remove package
+package { "strace": ensure => "absent" }
 #-------------------------------------------------------
 #file manage
-#-------------------------------------------------------
+#-----------
 file { "/tmp/file-test.txt": content => "hello world" }
+file {
+	"/var/www/html/index.html":
+	source => "puppet:///files/index.html"
+}
+#/etc/puppet/fileserver.conf
+[files]
+ path /etc/puppet/modules/files
+ allow *
+#create a dir
+file { "/opt/log":
+	ensure => "directory",
+	owner => "root",
+	group => "root",
+	mode => 750,
+}
+#create a dir tree
+file { [ "/opt/log/", "/opt/log/httpd", "/opt/log/httpd/2.0" ]:
+	ensure => "directory",
+}
+$dirs = [ "/opt/log/", "/opt/log/httpd", "/opt/log/httpd/2.0" ]
+file { $dirs:
+	ensure => "directory",
+	owner => "root",
+	group => "root",
+	mode => 750,
+}
+#create a symlink
+file { '/tmp/link-file':
+	ensure => 'link',
+	target => '/opt/link-target',
+}
 #-------------------------------------------------------
+#service
+#-------
+server { "httpd": ensure => "runing/stoped" }
