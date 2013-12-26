@@ -7,3 +7,5 @@ smaill-tools
 备份数据库数据
 
 主机SSH互信
+
+安装puppet
