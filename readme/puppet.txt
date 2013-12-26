@@ -1,0 +1,13 @@
+#-------------------------------------------------------
+#package
+#-------------------------------------------------------
+#install multi packages
+$beinstall = [ "sudo", "strace", "php-devel"]
+package { $beinstall: ensure => "installed" }
+#newer package versions
+package { $beinstall: ensure => "latest" }
+#-------------------------------------------------------
+#file manage
+#-------------------------------------------------------
+file { "/tmp/file-test.txt": content => "hello world" }
+#-------------------------------------------------------
