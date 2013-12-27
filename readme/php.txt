@@ -27,7 +27,7 @@ allow_url_include=Off
 
 7.启用SQL安全模式
 /etc/php.d/srcurity.ini
-sql.saef_mode=On
+sql.safe_mode=On
 magic_quotes_gpc=Off
 
 8.控制POST的数据大小
