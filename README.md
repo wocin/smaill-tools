@@ -1,4 +1,4 @@
-smaill-tools
+small-tools
 ============
 所以脚本均在CentOS6.2下操作
 
