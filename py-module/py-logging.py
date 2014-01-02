@@ -14,6 +14,14 @@ if len(sys.argv)>1:
     level=LEVELS.get(level_name,logging.NOTSET)
     logging.basicConfig(level=level)
 
+'''
+logging.basicConfig(
+	level=loging.DEBUG,
+	format='%(asctime)s %(filename) %(message)s',
+	datefmt='%y-%d-%m %H:%M:S',
+	filemode='a'
+)
+'''
 logging.debug('this is debug message')
 logging.info('this is info message')
 logging.warning('this is warning message')
